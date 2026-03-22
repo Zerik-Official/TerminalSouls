@@ -1,1 +1,8 @@
+pycairo
+PyGObject
 pywebview
+bottle
+typing_extensions
+proxy_tools
+pythonnet314-whl
+colorama
