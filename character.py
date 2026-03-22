@@ -1,4 +1,8 @@
-# character_manager.py
+"""
+character.py
+Modulo que define la clase Character, la cual representa a los personajes del juego, tanto el héroe como el enemigo. Esta clase incluye atributos para el nombre, 
+vida actual, vida máxima, daño mínimo y máximo, pociones disponibles, así como métodos para generar daño, usar habilidades especiales, curarse y recibir daño.
+"""
 import random
 
 class Character:
