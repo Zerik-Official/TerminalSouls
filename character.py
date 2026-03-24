@@ -1,7 +1,7 @@
 """
 character.py
-Modulo que define la clase Character, la cual representa a los personajes del juego, tanto el héroe como el enemigo. Esta clase incluye atributos para el nombre, 
-vida actual, vida máxima, daño mínimo y máximo, pociones disponibles, así como métodos para generar daño, usar habilidades especiales, curarse y recibir daño.
+Module that defines the Character class, which represents the characters in the game, both hero and enemy. This class includes attributes for name,
+current life, max life, minimum and maximum damage, available potions, as well as methods for generating damage, using special abilities, healing, and taking damage.
 """
 import random
 
@@ -23,13 +23,13 @@ class Character:
     
     def generate_damage(self) -> tuple[bool, int]:
         """
-        Metodo para generar el daño del personaje, hay una probabilidad del 10% de que el ataque sea un golpe critico siempre y cuando, el no esté en estado de furia, si lo está,
-        el ataque será un golpe critico garantizado, el daño se genera aleatoriamente entre el daño mínimo y máximo del personaje, si el ataque es un golpe critico, el daño se duplica.
+        Method to generate the character's damage. There is a 10% probability that the attack is a critical hit as long as the character is not in a rage state. If it is,
+        the attack will be a guaranteed critical hit. The damage is generated randomly between the character's minimum and maximum damage. If the attack is a critical hit, the damage is doubled.
         
         Args:
             None
         Returns:
-            tuple[bool, int]: Una tupla que indica si el ataque fue un golpe critico (True) o no (False), y el daño generado.
+            tuple[bool, int]: A tuple indicating whether the attack was a critical hit (True) or not (False), and the damage generated.
         """
 
         damage: int = random.randint(self.min_damage, self.max_damage)
@@ -46,14 +46,15 @@ class Character:
 
     def special_skill(self) -> tuple[bool, int]:
         """
-        Habilidad especial del personaje, tiene una probabilidad del 50% de fallar, si falla no genera daño, si tiene éxito genera un daño aleatorio entre 30 y 50, 
-        si el personaje está en estado de furia, la habilidad especial tiene un 100% de probabilidad de éxito y no puede ser esquivada.
+        Character's special ability. It has a 50% probability of failing. If it fails, it generates no damage. If it succeeds, it generates random damage between 30 and 50.
+        If the character is in a rage state, the special ability has a 100% probability of success and cannot be dodged.
         
         Args:
             None
         Returns:
-            tuple[bool, int]: Una tupla que indica si la habilidad especial falló (True) o tuvo éxito (False), y el daño generado (0 si falló).
+            tuple[bool, int]: A tuple indicating whether the special ability failed (True) or succeeded (False), and the damage generated (0 if failed).
         """
+
         damage_special_skill: int = random.randint(30, 50)
         if self.next_skill_guaranteed:
             return False, damage_special_skill
@@ -67,15 +68,16 @@ class Character:
     
     def use_cure(self) -> tuple[bool, int]:
         """
-        Intenta curar al personaje consumiendo una poción.
+        Attempts to heal the character by consuming a potion.
 
-        Si el personaje tiene al menos una poción, recupera una cantidad de vida
-        (entre 10 y 20) sin superar la vida máxima. Además, reduce en uno el número
-        de pociones disponibles.
+        If the character has at least one potion, it recovers a certain amount of life
+        (between 10 and 20) without exceeding max life. Additionally, it reduces the number
+        of available potions by one.
 
         Returns:
-            tuple[bool, int]: Una tupla que indica si la curación fue exitosa (True) o no (False), y la cantidad de vida recuperada.
+            tuple[bool, int]: A tuple indicating whether the healing was successful (True) or not (False), and the amount of life recovered.
         """
+
         if self.potions <= 0:
             return False, 0
 
@@ -93,15 +95,16 @@ class Character:
 
     def take_damage(self, damage: int, unavoidable: bool = False) -> tuple[bool, int]:
         """
-        Metodo para recibir daño, hay una probabilidad del 10% de esquivar el ataque, si el ataque es esquivado, no se recibe daño, si el atacante tiene el estado de furia, 
-        el ataque no puede ser esquivado, el daño recibido se resta de la vida actual del personaje, si la vida actual es menor a 0, se establece en 0.
+        Method to receive damage. There is a 10% probability to dodge the attack. If the attack is dodged, no damage is received. If the attacker is in a rage state,
+        the attack cannot be dodged. The damage received is subtracted from the character's current life. If current life is less than 0, it is set to 0.
 
         Args:
-            damage (int): El daño a recibir
-            unavoidable (bool): Indica si el ataque es inevitable, en cuyo caso no se puede esquivar. Por defecto es False.
+            damage (int): The damage to receive
+            unavoidable (bool): Indicates whether the attack is unavoidable, in which case it cannot be dodged. Default is False.
         Returns:
-            tuple[bool, int]: Una tupla que indica si el ataque fue esquivado (True) o no (False), y la vida actual después de recibir el daño.
+            tuple[bool, int]: A tuple indicating whether the attack was dodged (True) or not (False), and the current life after receiving the damage.
         """
+
         if unavoidable:
             self.current_life = max(self.current_life - damage, 0)
 
@@ -117,25 +120,27 @@ class Character:
     
     def is_dead(self) -> bool:
         """
-        Metodo para verificar si el personaje ha muerto, devuelve False si la vida es mayor a 0, caso contrario devuelve True
+        Method to verify if the character has died. Returns False if life is greater than 0, otherwise returns True.
         
         Args:
             None
         Returns:
-            bool: True si la vida actual es menor o igual a 0, de lo contrario False.
+            bool: True if current life is less than or equal to 0, otherwise False.
         """
+
         return self.current_life <= 0
     
     def apply_rage_buff(self):
         """
-        Metodo para aplicar el estado de furia al personaje, el siguiente ataque del personaje será un golpe critico, 
-        no podrá ser esquivado, su habilidad especial tendrá un 100% de probabilidad de éxito además no podrá ser esquivada.
+        Method to apply the rage state to the character. The next attack will be a critical hit,
+        it cannot be dodged, and the special ability will have a 100% success probability and cannot be dodged.
 
         Args:
             None
         Returns:
             None
         """
+
         self.next_attack_critical = True
         self.next_attack_unavoidable = True
         self.next_skill_guaranteed = True

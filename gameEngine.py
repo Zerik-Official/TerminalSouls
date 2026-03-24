@@ -1,7 +1,7 @@
 """
 GameEngine.py
-Este módulo contiene la clase GameEngine, que es responsable de manejar la lógica principal del juego,
-incluyendo la gestión de los turnos del héroe y el enemigo, así como la interacción entre ambos personajes.
+This module contains the GameEngine class, which is responsible for handling the main game logic,
+including the management of hero and enemy turns, as well as the interaction between both characters.
 """
 import random
 from character import Character
@@ -14,27 +14,28 @@ class GameEngine:
 
     def init_game(self, hero_name: str) -> dict:
         """
-        Metodo para iniciar el juego, establece el estado del juego como activo, inicia los personajes y devuelve un mensaje de inicio junto con los datos actuales del héroe y el enemigo.
+        Method to initialize the game. Sets the game state as active, initializes the characters, and returns a startup message with the current data of the hero and enemy.
 
         Args:
-            hero_name (str): El nombre del héroe ingresado por el usuario.
+            hero_name (str): The hero's name entered by the user.
         Returns:
-            dict: Un diccionario que contiene un mensaje de inicio y los datos actuales del héroe y el enemigo.
+            dict: A dictionary containing an initialization message and the current data of the hero and enemy.
         """
+
         self._init_characters(hero_name)
         self.game_active = True
 
         return {
-            "message": [f"¡El juego ha comenzado, preparate {self.hero.name}!"],
+            "message": [f"The game has started, get ready {self.hero.name}!"],
             "state": self.show_current_data()
         }
     
     def _init_characters(self, hero_name: str) -> None:
         """
-        Metodo privado interno del motor para iniciar los personajes del juego, el héroe y el enemigo, con sus respectivas estadísticas.
+        Internal private method of the engine to initialize the game characters, hero and enemy, with their respective statistics.
 
         Args:
-            hero_name (str): El nombre del héroe ingresado por el usuario.
+            hero_name (str): The hero's name entered by the user.
         Returns:
             None
         """
@@ -44,13 +45,14 @@ class GameEngine:
 
     def show_current_data(self) -> dict[str, dict[str, str | int]]:
         """
-        Metodo para mostrar los datos actuales del héroe y el enemigo, incluyendo su nombre, vida actual, vida máxima y pociones restantes.
+        Method to display the current data of the hero and enemy, including their name, current life, max life, and remaining potions.
 
         Args:
             None
         Returns:
-            dict[str, dict[str, str | int]]: Un diccionario con la información de ambos personajes.
+            dict[str, dict[str, str | int]]: A dictionary with information about both characters.
         """
+
         return {
             "hero": {
                 "name": self.hero.name,
@@ -68,19 +70,20 @@ class GameEngine:
 
     def process_turn(self, option: int) -> dict:
         """
-        Metodo para procesar el turno del héroe y el enemigo, dependiendo de la opción elegida por el usuario, se ejecuta el turno del héroe y luego el turno del enemigo, 
-        se verifica si alguno de los personajes ha muerto y se devuelve un mensaje con los resultados de ambos turnos junto con los datos actuales del héroe y el enemigo.
+        Method to process the hero's and enemy's turns. Depending on the user's chosen option, the hero's turn is executed first, then the enemy's turn.
+        It checks if any character has died and returns a message with the results of both turns along with the current data of the hero and enemy.
 
         Args:
-            option (int): La opción elegida por el usuario para el turno del héroe (1 para atacar, 2 para usar una poción, 3 para usar la habilidad especial).
+            option (int): The option chosen by the user for the hero's turn (1 to attack, 2 to use a potion, 3 to use the special ability).
         Returns:
-            dict: Un diccionario que contiene una lista de mensajes con los resultados de ambos turnos y los datos actuales del héroe y el enemigo.
+            dict: A dictionary containing a list of messages with the results of both turns and the current data of the hero and enemy.
         """
+
         messages: list[str] = []
 
         if not self.game_active:
             return {
-                "message": ["El juego no ha sido iniciado o ha finalizado. Por favor, inicia un nuevo juego para continuar."],
+                "message": ["The game has not been started or has ended. Please start a new game to continue."],
                 "state": self.show_current_data()
             }
 
@@ -88,7 +91,7 @@ class GameEngine:
 
         if self.enemy.is_dead():
             self.game_active = False
-            messages.append("El héroe ha logrado derrotar al enemigo. ¡El bien ha ganado!")
+            messages.append("The hero has defeated the enemy. Good has prevailed!")
             return {
                 "message": messages,
                 "state": self.show_current_data()
@@ -98,7 +101,7 @@ class GameEngine:
 
         if self.hero.is_dead():
             self.game_active = False
-            messages.append("El héroe ha sido derrotado por el enemigo. ¡Game Over!")
+            messages.append("The hero has been defeated by the enemy. Game Over!")
             return {
                 "message": messages,
                 "state": self.show_current_data()
@@ -111,12 +114,12 @@ class GameEngine:
     
     def hero_turn(self, option: int) -> list[str]:
         """
-        Metodo para ejecutar el turno del héroe, dependiendo de la opción elegida por el usuario, el héroe puede atacar, usar una poción o usar su habilidad especial.
+        Method to execute the hero's turn. Depending on the user's chosen option, the hero can attack, use a potion, or use their special ability.
 
         Args:
-            option (int): La opción elegida por el usuario (1 para atacar, 2 para usar una poción, 3 para usar la habilidad especial).
+            option (int): The option chosen by the user (1 to attack, 2 to use a potion, 3 to use the special ability).
         Returns:
-            list[str]: Una lista de mensajes que describen las acciones y resultados del turno del héroe.
+            list[str]: A list of messages describing the actions and results of the hero's turn.
         """
 
         messages: list[str] = []
@@ -131,22 +134,22 @@ class GameEngine:
 
                 self.hero.next_attack_unavoidable = False
 
-                fixed_part: str = 'golpe critico' if critical else 'golpe normal'
+                fixed_part: str = 'critical hit' if critical else 'normal attack'
 
 
                 if dodged:
                     messages.append(
-                        f"El héroe ha intentado lanzar un {fixed_part}, pero, el enemigo ha logrado esquivarlo y ha empezado a burlarse del héroe."
+                        f"The hero attempted to throw a {fixed_part}, but the enemy managed to dodge it and started mocking the hero."
                         )
 
                 else:
                     if unavoidable:                        
                         messages.append(
-                            f"El héroe en un estado de furía, conecta un potente golpe critico al enemigo, el cual sufre {damage} de daño critico y su vida queda en {self.enemy.current_life}, este queda adolorido por tal golpe."
+                            f"The hero, in a state of rage, connects a powerful critical hit to the enemy, which suffers {damage} critical damage and its life is now at {self.enemy.current_life}. The enemy is in pain from such a blow."
                             )
                     else:
                         messages.append(
-                            f"El enemigo ha intentado esquivar un {fixed_part}, de {damage} de daño y ha fallado, la vida del enemigo quedó en {self.enemy.current_life}, el héroe festeja su {fixed_part}."
+                            f"The enemy attempted to dodge a {fixed_part} dealing {damage} damage and failed. The enemy's life is now at {self.enemy.current_life}. The hero celebrates their {fixed_part}."
                             )
 
                 return messages
@@ -156,13 +159,13 @@ class GameEngine:
 
                 if result:
                     messages.append(
-                        f"La curación fue exitosa: "
-                        f"el héroe ha recuperado {healed} de vida. "
-                        f"Vida actual: {self.hero.current_life}. "
-                        f"Pociones restantes: {self.hero.potions}"
+                        f"Healing was successful: "
+                        f"the hero has recovered {healed} life. "
+                        f"Current life: {self.hero.current_life}. "
+                        f"Remaining potions: {self.hero.potions}"
                     )
                 else:
-                    messages.append("Sin pociones restantes, el héroe pierde el turno mientras rebusca inútilmente en su mochila.")
+                    messages.append("No potions left. The hero wastes their turn searching their backpack in vain.")
                 
                 return messages
             
@@ -171,7 +174,7 @@ class GameEngine:
 
                 if failure:
                     messages.append(
-                        f"El héroe ha fallado su hábilidad especial y ha empezado a llorar, el enemigo suelta una risa burlona"
+                        f"The hero failed their special ability and started crying. The enemy lets out a mocking laugh."
                     )
                 else:
                     unavoidable: bool = self.hero.next_skill_guaranteed
@@ -181,13 +184,13 @@ class GameEngine:
                     if was_dodged:
                         self.hero.apply_rage_buff()
                         messages.append(
-                            f"El héroe ha hecho un esfuerzo increible y ha logrado lanzar su habilidad especial, pero, el enemigo ha logrado esquivarla y este empieza a reirse descontroladamente. "
-                            f"El héroe entra en estado de furia, esto garantiza que en su próximo turno, logre asestar un golpe critico, no puedan esquivar su ataque y además, garantiza que su próxima habilidad especial, sea casteada exitosamente y no sea esquivada."
+                            f"The hero made an incredible effort and managed to launch their special ability, but the enemy dodged it and started laughing uncontrollably. "
+                            f"The hero enters a state of rage. This guarantees that on their next turn, they will land a critical hit that cannot be dodged, and their next special ability will be cast successfully and cannot be dodged."
                         )
                     else:
                         messages.append(
-                            f"La habilidad especial impacta correctamente causando {damage_special_skill} de daño. "
-                            f"El enemigo queda bastante herido y su vida quedó en {self.enemy.current_life}."
+                            f"The special ability impacts correctly, dealing {damage_special_skill} damage. "
+                            f"The enemy is badly hurt and their life is now at {self.enemy.current_life}."
                         )
 
                     if unavoidable:
@@ -197,13 +200,13 @@ class GameEngine:
                 
     def enemy_turn(self) -> list[str]:
         """
-        Metodo para ejecutar el turno del enemigo, el enemigo intentará curarse si su vida es menor o igual al 20% de su vida máxima, 
-        luego atacará al héroe con un golpe que puede ser crítico o normal.
+        Method to execute the enemy's turn. The enemy will attempt to heal if their life is less than or equal to 20% of their max life,
+        then attack the hero with a hit that can be critical or normal.
 
         Args:
             None
         Returns:
-            list[str]: Una lista de mensajes que describen las acciones y resultados del turno del enemigo.
+            list[str]: A list of messages describing the actions and results of the enemy's turn.
         """
 
         messages: list[str] = []
@@ -213,7 +216,7 @@ class GameEngine:
         healed: int = 0
 
         if life_ratio <= 0.2:
-            messages.append("El enemigo intenta canalizar energía oscura para curarse...")
+            messages.append("The enemy attempts to channel dark energy to heal themselves...")
 
             success: bool = random.random() < 0.5
 
@@ -227,25 +230,25 @@ class GameEngine:
                 healed: int = self.enemy.current_life - life_before
 
                 messages.append(
-                    f"El enemigo logra curarse {healed} de vida. Vida actual: {self.enemy.current_life}. El héroe empieza a preocuparse"
+                    f"The enemy manages to heal {healed} life. Current life: {self.enemy.current_life}. The hero starts to worry."
                     )
             else:
-                messages.append("La curación falla y la energía se disipa en el aire... El héroe suspira aliviado.")
+                messages.append("The healing fails and the energy dissipates into the air. The hero sighs with relief.")
 
         critical, damage = self.enemy.generate_damage()
 
         dodged, _ = self.hero.take_damage(damage)
 
-        fixed_part: str = "golpe crítico" if critical else "golpe normal"
+        fixed_part: str = "critical hit" if critical else "normal attack"
 
         if dodged:
             messages.append(
-                f"El enemigo lanza un {fixed_part}, pero el héroe logra esquivarlo este suelta un suspiro por haber logrado esquivar el golpe a tiempo. "
+                f"The enemy throws a {fixed_part}, but the hero manages to dodge it. The hero sighs, relieved to have dodged the blow in time. "
             )
         else:
             messages.append(
-                f"El enemigo conecta un {fixed_part} causando {damage} de daño. "
-                f"El héroe sale disparado bastante lejos y su vida quedó en {self.hero.current_life}."
+                f"The enemy connects a {fixed_part}, dealing {damage} damage. "
+                f"The hero is knocked back quite far and their life is now at {self.hero.current_life}."
             )
         
         return messages
