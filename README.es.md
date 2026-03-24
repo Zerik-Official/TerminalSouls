@@ -1,9 +1,10 @@
 # TerminalSouls
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-5-orange?logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-3-blue?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow?logo=javascript&logoColor=black)
 ![PyWebView](https://img.shields.io/badge/PyWebView-Desktop_UI-lightgrey?logo=windows&logoColor=white)
-![PyArmor](https://img.shields.io/badge/PyArmor-Obfuscation-red?logo=shield&logoColor=white)
-![PyInstaller](https://img.shields.io/badge/PyInstaller-Bundler-purple?logo=pypi&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 > También disponible en [English](README.md) &nbsp;|&nbsp; Ver [Créditos](CREDITS.md)
