@@ -1,6 +1,8 @@
 """
+This is the main entry point for the Terminal Souls game. 
+It initializes the game engine, detects the appropriate backend for the GUI based on the operating system, 
+and starts the GUI. The script also includes a logo and some loading animations to enhance the user experience when launching the game.
 """
-
 # Libraries
 import time
 from colorama import init, Style, Fore
@@ -32,4 +34,4 @@ if __name__ == "__main__":
     
     generic_animation_load(f"[{Fore.GREEN}INFO{Style.RESET_ALL}] Initializing the GUI with the {backend} backend", 3)
 
-    init_gui(backend, True)
+    init_gui(backend, False)
