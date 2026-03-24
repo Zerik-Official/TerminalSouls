@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerminalSouls</title>
+    <link rel="stylesheet" href="../../assets/css/index/index.css">
+    <link rel="stylesheet" href="../../assets/css/libs/all.min.css">
+</head>
+<body>
+
+    <div id="screen-setup" class="screen active">
+        <div class="setup-bg"></div>
+        <div class="setup-container">
+            <div class="setup-logo">
+                <span class="logo-terminal">Terminal</span><span class="logo-souls">Souls</span>
+            </div>
+
+            <div class="setup-step" id="step-name">
+                <p class="setup-label">Enter your name, warrior</p>
+                <div class="setup-input-wrap">
+                    <input
+                        type="text"
+                        id="input-name"
+                        class="setup-input"
+                        maxlength="20"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Your name..."
+                    />
+                    <span id="name-error" class="setup-error hidden">Name must be letters only and cannot be empty.</span>
+                </div>
+                <button class="setup-btn" id="btn-name-next">
+                    Continue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="setup-step hidden" id="step-gender">
+                <p class="setup-label">Choose your warrior</p>
+                <div class="gender-options">
+                    <button class="gender-card" data-gender="male">
+                        <div class="gender-icon"><i class="fa-solid fa-mars"></i></div>
+                        <span>Male</span>
+                    </button>
+                    <button class="gender-card" data-gender="female">
+                        <div class="gender-icon"><i class="fa-solid fa-venus"></i></div>
+                        <span>Female</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-loading" class="screen">
+        <div id="loading-bg" class="loading-bg"></div>
+        <div class="loading-overlay">
+            <div class="loading-content">
+                <div class="loading-spinner">
+                    <i class="fa-solid fa-khanda fa-spin"></i>
+                </div>
+                <p class="loading-text">Entering the battlefield...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-game" class="screen">
+        <div id="game-bg" class="game-bg"></div>
+
+        <div class="game-layout">
+
+            <div class="top-bar">
+                <div class="char-info hero-info">
+                    <span class="char-name" id="hero-name-label">Hero</span>
+                    <div class="life-bar-wrap">
+                        <div class="life-bar hero-bar">
+                            <div class="life-fill" id="hero-life-fill"></div>
+                        </div>
+                        <span class="life-text" id="hero-life-text">100 / 100</span>
+                    </div>
+                    <div class="potions-row" id="potions-row"></div>
+                </div>
+
+                <div class="turn-info">
+                    <div class="turn-badge" id="turn-badge">Your Turn</div>
+                    <div class="turn-counter">Turn <span id="turn-number">1</span></div>
+                </div>
+
+                <div class="char-info enemy-info">
+                    <span class="char-name" id="enemy-name-label">Thanos</span>
+                    <div class="life-bar-wrap">
+                        <div class="life-bar enemy-bar">
+                            <div class="life-fill" id="enemy-life-fill"></div>
+                        </div>
+                        <span class="life-text" id="enemy-life-text">120 / 120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arena">
+                <div class="hero-slot" id="hero-slot">
+                    <div class="character-sprite" id="hero-sprite">
+                        <img id="hero-frame" src="" alt="hero" />
+                    </div>
+                    <div class="rage-aura hidden" id="rage-aura"></div>
+                </div>
+
+                <div class="enemy-slot" id="enemy-slot">
+                    <div class="character-sprite flipped" id="enemy-sprite">
+                        <img id="enemy-frame" src="" alt="enemy" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-section">
+                <div class="cards-area">
+                    <div class="cards-row" id="cards-row">
+                        <div class="skill-card" id="card-1" data-option="1">
+                            <div class="card-rage-border hidden" id="rage-border-1"></div>
+                            <div class="card-icon">
+                                <img id="card-icon-1" src="" alt="Attack" />
+                            </div>
+                            <span class="card-label" id="card-label-1">Attack</span>
+                        </div>
+                        <div class="skill-card" id="card-2" data-option="2">
+                            <div class="card-icon">
+                                <img id="card-icon-2" src="" alt="Potion" />
+                            </div>
+                            <span class="card-label" id="card-label-2">Use Potion</span>
+                        </div>
+                        <div class="skill-card" id="card-3" data-option="3">
+                            <div class="card-rage-border hidden" id="rage-border-3"></div>
+                            <div class="card-icon">
+                                <img id="card-icon-3" src="" alt="Special" />
+                            </div>
+                            <span class="card-label" id="card-label-3">Special Skill</span>
+                        </div>
+                        <div class="skill-card skip-card" id="card-4" data-option="4">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-forward"></i>
+                            </div>
+                            <span class="card-label">Skip Turn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="log-area" id="log-area">
+                    <div class="log-messages" id="log-messages"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="game-over-overlay" class="game-over-overlay hidden">
+            <div class="game-over-box">
+                <h2 id="game-over-title"></h2>
+                <p id="game-over-subtitle"></p>
+                <button class="setup-btn" id="btn-restart">
+                    Play Again <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="potion-float" class="potion-float hidden">
+        <img id="potion-float-img" src="" alt="potion" />
+    </div>
+
+    <script src="../../assets/js/index/index.js"></script>
+</body>
+</html>
