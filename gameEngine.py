@@ -114,7 +114,8 @@ class GameEngine:
     
     def hero_turn(self, option: int) -> list[str]:
         """
-        Method to execute the hero's turn. Depending on the user's chosen option, the hero can attack, use a potion, or use their special ability.
+        Method to execute the hero's turn. Depending on the user's chosen option, the hero can attack, use a potion, or use their special ability. 
+        The method returns a list of messages describing the actions and results of the hero's turn.
 
         Args:
             option (int): The option chosen by the user (1 to attack, 2 to use a potion, 3 to use the special ability).
@@ -197,7 +198,32 @@ class GameEngine:
                         self.hero.next_skill_guaranteed = False
                     
                 return messages
+            
+            case 4:
+
+                random_idle_messages: list[str] = [
+                    "The hero hesitates for a moment, unsure of what to do next.",
+                    "An eerie silence fills the battlefield as the hero simply stands still.",
+                    "The hero pauses, overwhelmed by the dark energy surrounding them.",
+                    "The hero momentarily freezes, unable to decide their next action.",
+                    "The hero takes a deep breath but ultimately does nothing.",
+                    "Confused by the enemy's presence, the hero loses precious time doing nothing.",
+                    "The hero stands motionless, as if lost in thought.",
+                    "The hero falters, distracted by the ominous aura in the air.",
+                    "The hero hesitates, giving the enemy a brief opportunity to prepare.",
+                    "Uncertain and shaken, the hero wastes their turn."
+                ]
+
+                messages.append(random.choice(random_idle_messages))
+
+                return messages 
                 
+            case _:
+
+                messages.append("Invalid option. The hero wastes their turn trying to understand what the user just inputted.")
+
+                return messages
+
     def enemy_turn(self) -> list[str]:
         """
         Method to execute the enemy's turn. The enemy will attempt to heal if their life is less than or equal to 20% of their max life,
