@@ -1,5 +1,6 @@
 
 # Library imports
+import os
 import webview
 
 # Internal modules
@@ -18,6 +19,16 @@ def init_gui(gui_platform: str, dev_mode: bool = False) -> None:
     Returns:
         None
     """
+
+    game_interface_path: str = os.path.abspath("templates/index/index.html").replace("\\", "/")
     
-    window: webview.Window = webview.create_window('TerminalSouls', url='templates/index/index.html', js_api=engine)
-    webview.start(gui=gui_platform, debug=dev_mode)
+    window: webview.Window = webview.create_window(
+        'TerminalSouls', 
+        url=f"file:///{game_interface_path}", 
+        js_api=engine
+        )
+    
+    webview.start(
+        gui=gui_platform, 
+        debug=dev_mode
+        )
