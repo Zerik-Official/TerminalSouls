@@ -25,7 +25,11 @@ def init_gui(gui_platform: str, dev_mode: bool = False) -> None:
     window: webview.Window = webview.create_window(
         'TerminalSouls', 
         url=f"file:///{game_interface_path}", 
-        js_api=engine
+        js_api=engine,
+        width=1200,
+        height=740,
+        minimized=False,
+        maximized=False
         )
     
     webview.start(
