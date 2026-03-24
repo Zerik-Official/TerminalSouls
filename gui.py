@@ -9,6 +9,9 @@ from gameEngine import GameEngine
 # Initialize the game engine
 engine: GameEngine = GameEngine()
 
+# Allow loading local files in the webview, which is necessary to load the game's HTML interface from the templates folder.
+webview.settings['ALLOW_FILE_URLS'] = True
+
 def init_gui(gui_platform: str, dev_mode: bool = False) -> None:
     """
     Function to initialize the GUI of the game using the specified backend. It creates a webview window and starts the GUI loop.
