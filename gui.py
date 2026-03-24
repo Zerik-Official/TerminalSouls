@@ -1,4 +1,8 @@
-
+"""
+This module is responsible for initializing and running the graphical user interface (GUI) of the Terminal Souls game. 
+It uses the webview library to create a window that loads the game's HTML interface. 
+The module also integrates with the game engine to allow interaction between the GUI and the game's logic.
+"""
 # Library imports
 import os
 import webview
