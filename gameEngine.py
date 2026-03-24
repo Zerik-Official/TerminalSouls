@@ -8,24 +8,20 @@ from character import Character
 
 class GameEngine:
     def __init__(self):
-        # Character initialization
-        self.hero: Character = Character("", 3, 100, 100, 10, 25)
-        self.enemy: Character = Character("Thanos", 0, 120, 120, 15, 20)
-
         # Game state
         self.game_active: bool = False
     
 
     def init_game(self, hero_name: str) -> dict:
         """
-        Metodo para iniciar el juego, establece el estado del juego como activo y devuelve un mensaje de inicio junto con los datos actuales del héroe y el enemigo.
+        Metodo para iniciar el juego, establece el estado del juego como activo, inicia los personajes y devuelve un mensaje de inicio junto con los datos actuales del héroe y el enemigo.
 
         Args:
             hero_name (str): El nombre del héroe ingresado por el usuario.
         Returns:
             dict: Un diccionario que contiene un mensaje de inicio y los datos actuales del héroe y el enemigo.
         """
-        self.hero.name = hero_name
+        self._init_characters(hero_name)
         self.game_active = True
 
         return {
@@ -33,6 +29,43 @@ class GameEngine:
             "state": self.show_current_data()
         }
     
+    def _init_characters(self, hero_name: str) -> None:
+        """
+        Metodo privado interno del motor para iniciar los personajes del juego, el héroe y el enemigo, con sus respectivas estadísticas.
+
+        Args:
+            hero_name (str): El nombre del héroe ingresado por el usuario.
+        Returns:
+            None
+        """
+
+        self.hero: Character = Character(hero_name, 3, 100, 100, 10, 25)
+        self.enemy: Character = Character("Thanos", 0, 120, 120, 15, 20)
+
+    def show_current_data(self) -> dict[str, dict[str, str | int]]:
+        """
+        Metodo para mostrar los datos actuales del héroe y el enemigo, incluyendo su nombre, vida actual, vida máxima y pociones restantes.
+
+        Args:
+            None
+        Returns:
+            dict[str, dict[str, str | int]]: Un diccionario con la información de ambos personajes.
+        """
+        return {
+            "hero": {
+                "name": self.hero.name,
+                "current_life": self.hero.current_life,
+                "max_life": self.hero.max_life,
+                "potions": self.hero.potions,
+                    },
+            "enemy": {
+                "name": self.enemy.name,
+                "current_life": self.enemy.current_life,
+                "max_life": self.enemy.max_life,
+                "potions": self.enemy.potions
+            }
+        }
+
     def process_turn(self, option: int) -> dict:
         """
         Metodo para procesar el turno del héroe y el enemigo, dependiendo de la opción elegida por el usuario, se ejecuta el turno del héroe y luego el turno del enemigo, 
@@ -76,30 +109,6 @@ class GameEngine:
             "state": self.show_current_data()
         }
     
-    def show_current_data(self) -> dict[str, dict[str, str | int]]:
-        """
-        Metodo para mostrar los datos actuales del héroe y el enemigo, incluyendo su nombre, vida actual, vida máxima y pociones restantes.
-
-        Args:
-            None
-        Returns:
-            dict[str, dict[str, str | int]]: Un diccionario con la información de ambos personajes.
-        """
-        return {
-            "hero": {
-                "name": self.hero.name,
-                "current_life": self.hero.current_life,
-                "max_life": self.hero.max_life,
-                "potions": self.hero.potions,
-                    },
-            "enemy": {
-                "name": self.enemy.name,
-                "current_life": self.enemy.current_life,
-                "max_life": self.enemy.max_life,
-                "potions": self.enemy.potions
-            }
-        }
-
     def hero_turn(self, option: int) -> list[str]:
         """
         Metodo para ejecutar el turno del héroe, dependiendo de la opción elegida por el usuario, el héroe puede atacar, usar una poción o usar su habilidad especial.
@@ -186,10 +195,10 @@ class GameEngine:
                     
                 return messages
                 
-
     def enemy_turn(self) -> list[str]:
         """
-        Metodo para ejecutar el turno del enemigo.
+        Metodo para ejecutar el turno del enemigo, el enemigo intentará curarse si su vida es menor o igual al 20% de su vida máxima, 
+        luego atacará al héroe con un golpe que puede ser crítico o normal.
 
         Args:
             None
